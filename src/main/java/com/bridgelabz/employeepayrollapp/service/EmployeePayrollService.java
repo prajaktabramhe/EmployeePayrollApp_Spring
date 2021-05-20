@@ -10,37 +10,42 @@ import com.bridgelabz.employeepayrollapp.model.EmployeePayrollData;
 public class EmployeePayrollService implements IEmployeePayrollService
 {
 
+	private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+	
 	@Override
-	public List<EmployeePayrollData> getEmployeePayrollData() {
-		List<EmployeePayrollData> employeePayrollList=new ArrayList<>();
-		employeePayrollList.add(new EmployeePayrollData(1, new EmployeePayrollDTO("Prajakta", 40000000)));
-		return employeePayrollList;
+	public List<EmployeePayrollData> getEmployeePayrollData() 
+	{
+     		return employeePayrollList;
 	}
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollDataById(int empId) {
+		return employeePayrollList.get(empId-1);
+	}
+
+	@Override
+	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) 
+	{
 		EmployeePayrollData payrollData=null;
-		payrollData=new EmployeePayrollData(2,new EmployeePayrollDTO("Arun", 450000));
+		payrollData=new EmployeePayrollData(employeePayrollList.size()+1, employeePayrollDTO);
+		employeePayrollList.add(payrollData);
 		return payrollData;
 	}
 
 	@Override
-	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-		EmployeePayrollData payrollData=null;
-		payrollData=new EmployeePayrollData(3, employeePayrollDTO);
+	public EmployeePayrollData updateEmployeePayrollData(int empId,EmployeePayrollDTO employeePayrollDTO) 
+	{
+		EmployeePayrollData payrollData=this.getEmployeePayrollDataById(empId);
+		payrollData.setName(employeePayrollDTO.name);
+		payrollData.setSalary(employeePayrollDTO.salary);
+		employeePayrollList.set(empId-1, payrollData);
 		return payrollData;
 	}
-
+	
 	@Override
-	public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-		EmployeePayrollData payrollData=null;
-		payrollData=new EmployeePayrollData(3, employeePayrollDTO);
-		return payrollData;
-	}
-
-	@Override
-	public void deleteEmployeePayrollData(int empId) {
-		// TODO Auto-generated method stub
+	public void deleteEmployeePayrollData(int empId)
+	{
+		employeePayrollList.remove(empId-1);
 		
 	}
 	
