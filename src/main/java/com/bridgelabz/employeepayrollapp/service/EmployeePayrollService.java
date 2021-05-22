@@ -32,6 +32,11 @@ public class EmployeePayrollService implements IEmployeePayrollService
 	}
 	
 	@Override
+	public List<EmployeePayrollData> getEmployeesByDepartment(String department) {
+		return employeeRepository.findEmployeesById(department);
+	}
+	
+	@Override
 	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) 
 	{
 		EmployeePayrollData payrollData=null;
@@ -55,4 +60,6 @@ public class EmployeePayrollService implements IEmployeePayrollService
 		employeeRepository.delete(payrollData);
 
 	}
+
+
 }
