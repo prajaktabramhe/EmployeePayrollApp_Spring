@@ -50,9 +50,13 @@ public class EmployeePayrollController
 		return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
 	}
 	
-	/**
-	 * API to add new employee to DB
-	 */
+	@GetMapping("/department/{department}")
+	public ResponseEntity<ResponseDTO> getEmployeesByDepartment(@PathVariable("department") String department) {
+		List<EmployeePayrollData> employeesByDepartment = employeePayrollService.getEmployeesByDepartment(department);
+		ResponseDTO responseDTO = new ResponseDTO("Get call for the department success ", employeesByDepartment);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO)
 	{
